@@ -13,12 +13,18 @@ class BolideplayerConan(ConanFile):
     generators = "cmake"
     exports_sources = "*", "!build/*", "!test_package/*"
 
-    def configure(self):
-        self.requires(self.drQpRequire("HAL"))
+
+    def requirements(self):
+        self.requires(self.drQpRequire("HAL/develop"))
+
+    def build_requirements(self):
+        if self.settings.os == "Arduino":
+            self.build_requires(self.drQpRequire("arduino-board-xyzrobot/1.0.0"))
+            self.build_requires(self.drQpRequire("arduino-toolchain/[>1.8]"))
 
     def drQpRequire(self, packageName):
-        return "%s/develop@%s/%s" % (packageName, self.user, self.channel)
-
+        return "%s@%s/%s" % (packageName, self.user, self.channel)
+        
     def build(self):
         cmake = CMake(self)
         cmake.configure()
