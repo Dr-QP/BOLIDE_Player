@@ -12,13 +12,17 @@ class BolideplayerConan(ConanFile):
     default_options = "shared=True"
     generators = "cmake"
     exports_sources = "*", "!build/*", "!test_package/*"
-    requires = "HAL/develop@anton-matosov/dev"
+
+    def configure(self):
+        self.requires(self.drQpRequire("HAL"))
+
+    def drQpRequire(self, packageName):
+        return "%s/develop@%s/%s" % (packageName, self.user, self.channel)
 
     def build(self):
         cmake = CMake(self)
-        shared = "-DBUILD_SHARED_LIBS=ON" if self.options.shared else ""
-        self.run('cmake . %s %s' % (cmake.command_line, shared))
-        self.run("cmake --build . %s" % cmake.build_config)
+        cmake.configure()
+        cmake.build()
 
     def package(self):
         self.copy("*.h", dst="include", src=".")

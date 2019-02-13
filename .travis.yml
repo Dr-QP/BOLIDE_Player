@@ -1,0 +1,33 @@
+
+linux: &linux
+   os: linux
+   sudo: required
+   language: python
+   python: "3.6"
+   services:
+     - docker
+osx: &osx
+   os: osx
+   language: generic
+matrix:
+   include:
+      - <<: *linux
+        env: CONAN_GCC_VERSIONS=7 CONAN_DOCKER_IMAGE=conanio/gcc7 DRQP_NATIVE_BUILD=1
+   
+      - <<: *linux
+        env: DRQP_ARDUINO_BUILD=1
+
+      - <<: *osx
+        osx_image: xcode10
+        env: 
+          - CONAN_APPLE_CLANG_VERSIONS=10.0
+          - DRQP_NATIVE_BUILD=1
+          - DRQP_ARDUINO_BUILD=1
+
+install:
+  - chmod +x .travis/install.sh
+  - ./.travis/install.sh
+
+script:
+  - chmod +x .travis/run.sh
+  - ./.travis/run.sh
