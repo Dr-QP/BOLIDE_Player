@@ -2,7 +2,7 @@ from conans import ConanFile, CMake, tools
 import os
 
 
-class BolideplayerConan(ConanFile):
+class BolidePlayerConan(ConanFile):
     name = "BOLIDE_Player"
     version = "develop"
     license = "LGPL"
@@ -11,7 +11,7 @@ class BolideplayerConan(ConanFile):
     options = {"shared": [True, False]}
     default_options = "shared=True"
     generators = "cmake"
-    exports_sources = "*", "!build/*", "!test_package/*"
+    exports_sources = "*", "!build/*", "!test_package/*", "!.travis*", "!.vs*"
 
 
     def requirements(self):
@@ -31,11 +31,11 @@ class BolideplayerConan(ConanFile):
         cmake.build()
 
     def package(self):
-        self.copy("*.h", dst="include", src=".")
-        self.copy("*BOLIDE_Player.lib", dst="lib", keep_path=False)
+        self.copy("*.h", dst="include", src="src", keep_path=False)
+        self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("*.dll", dst="bin", keep_path=False)
-        self.copy("*.so", dst="lib", keep_path=False)
-        self.copy("*.dylib", dst="lib", keep_path=False)
+        self.copy("*.so", dst="bin", keep_path=False)
+        self.copy("*.dylib", dst="bin", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
 
     def package_info(self):
