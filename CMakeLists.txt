@@ -17,13 +17,11 @@ endif()
 include(${CONAN_BUILD_INFO_FILE})
 conan_basic_setup()
 
-
-file(GLOB_RECURSE ${PROJECT_NAME}_HDRS src/*.h)
-file(GLOB_RECURSE ${PROJECT_NAME}_SRCS src/*.cpp)
-
+file(GLOB_RECURSE ALL_HDRS src/*.h)
+file(GLOB_RECURSE ALL_SRCS src/*.cpp)
 
 if(UNIX)
-  add_library(${PROJECT_NAME} STATIC ${PROJECT_NAME}_HDRS ${PROJECT_NAME}_SRCS)
+  add_library(${PROJECT_NAME} STATIC ${ALL_HDRS} ${ALL_SRCS})
 elseif(${CMAKE_SYSTEM_NAME} STREQUAL Arduino)
-  generate_arduino_library(${PROJECT_NAME})
+  generate_arduino_library(${PROJECT_NAME} HDRS ${ALL_HDRS} SRCS ${ALL_SRCS})
 endif()
