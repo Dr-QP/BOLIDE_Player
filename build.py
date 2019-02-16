@@ -22,7 +22,10 @@ class ArduinoPackager(ConanMultiPackager):
         }, options=options, env_vars={
             "CC": "gcc"
         }, build_requires={
-            "*": ["arduino-toolchain/1.8.8@conan/testing"]
+            "*": [
+                "arduino-toolchain/1.8.8@conan/testing",
+                "arduino-board-xyzrobot/1.0.0@conan/testing"
+            ]
         })
 
 

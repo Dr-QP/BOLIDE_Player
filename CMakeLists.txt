@@ -20,4 +20,9 @@ conan_basic_setup()
 file(GLOB_RECURSE ALL_HDRS src/*.h)
 file(GLOB_RECURSE ALL_SRCS src/*.cpp)
 
-add_library(${PROJECT_NAME} STATIC ${ALL_HDRS} ${ALL_SRCS})
+
+if(UNIX)
+  add_library(${PROJECT_NAME} STATIC ${ALL_HDRS} ${ALL_SRCS})
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL Arduino)
+  generate_arduino_library(${PROJECT_NAME})
+endif()
