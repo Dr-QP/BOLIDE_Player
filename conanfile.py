@@ -13,6 +13,9 @@ class BolidePlayerConan(ConanFile):
     generators = "cmake"
     exports_sources = "*", "!build/*", "!test_package/*", "!.travis*", "!.vs*"
 
+    def configure(self):
+        if self.settings.os == "Arduino":
+            del self.options.shared
 
     def requirements(self):
         self.requires(self.drQpRequire("HAL/develop"))
