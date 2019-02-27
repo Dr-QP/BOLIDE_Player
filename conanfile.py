@@ -23,7 +23,7 @@ class BolidePlayerConan(ConanFile):
     def build_requirements(self):
         if self.settings.os == "Arduino":
             self.build_requires(self.drQpRequire("arduino-board-xyzrobot/1.0.0"))
-            self.build_requires(self.drQpRequire("arduino-toolchain/[>1.8]"))
+            self.build_requires(self.drQpRequire("arduino-toolchain/[~=1.8]"))
 
     def drQpRequire(self, packageName):
         return "%s@%s/%s" % (packageName, self.user, self.channel)
