@@ -16,4 +16,8 @@ class BolideplayerTestConan(ConanFile):
 
     def test(self):
         os.chdir("bin")
-        self.run(".%sexample" % os.sep)
+        if self.settings.os == "Arduino":
+            # Tests need to be uploaded to Arduino to run. So do nothing for now
+            pass
+        else:
+            self.run(".%sexample" % os.sep)

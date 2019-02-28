@@ -28,6 +28,7 @@
 // TODO: Move ohserialstream cout to HAL Config
 #ifdef ARDUINO
 #   include <serstream>
+#   include <HardwareSerial.h>
 namespace std
 {
     ohserialstream cout(Serial);

@@ -19,6 +19,8 @@ class BolidePlayerConan(ConanFile):
 
     def requirements(self):
         self.requires(self.drQpRequire("HAL/develop"))
+        if self.settings.os == "Arduino":
+            self.requires(self.drQpRequire("arduino-stl/1.0.0"))
 
     def build_requirements(self):
         if self.settings.os == "Arduino":
